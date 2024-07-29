@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teste</title>
+  </head>
+  <body>
+    <form action="/pedidos" method="post">
+      <label for="nome">Nome:</label>
+      <input type="text" name="nome" id="nome" required />
+      <label for="preco">Preço</label>
+      <input type="text" name="preco" id="preco" required />
+    </form>
+  </body>
+  <script>
+    document.getElementById('produto-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const nome = document.getElementById('nome').value;
+      const preco = document.getElementById('preco').value;
+      
+      try {
+        const response = await fetch('/api/CriarProdutos', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ nome, preco })
+        });
+        
+        const result = await response.json();
+        alert(`Produto cadastrado com sucesso: ${result.nome} - R$${result.preco}`);
+      } catch (error) {
+        console.error('Erro ao cadastrar produto:', error);
+      }
+    });
+  </script>
+</body>
+</html>
+</html>
